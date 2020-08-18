@@ -12,38 +12,40 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="pin-generator half-width">
-                    <input id = "pin-generate" class="form-control" type="text">
+                    <input id = "pinGenerate" class="form-control" type="text">
                     <button onclick="generatePin()" class="generate-btn">Generate Pin</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-section half-width">
-                    <input class="form-control" type="text">
+                    <input id = "displayNumber" class="form-control" type="text">
                     <div class="numbers">
                         <div class="calc-body">
-                            <div class="calc-button-row">
-                              <div class="button">7</div>
-                              <div class="button">8</div>
-                              <div class="button">9</div>
-                            </div>
-                            <div class="calc-button-row">
-                              <div class="button">4</div>
-                              <div class="button">5</div>
-                              <div class="button">6</div>
-                            </div>
-                            <div class="calc-button-row">
-                              <div class="button">1</div>
-                              <div class="button">2</div>
-                              <div class="button">3</div>
-                            </div>
-                            <div class="calc-button-row">
-                                <div class="button"><</div>
-                                <div class="button">0</div>
-                                <div class="button">C</div>
+                            <div id="numpad">
+                                <div class="calc-button-row">
+                                    <div class="button">7</div>
+                                    <div class="button">8</div>
+                                    <div class="button">9</div>
+                                </div>
+                                <div class="calc-button-row">
+                                    <div class="button">4</div>
+                                    <div class="button">5</div>
+                                    <div class="button">6</div>
+                                </div>
+                                <div class="calc-button-row">
+                                    <div class="button">1</div>
+                                    <div class="button">2</div>
+                                    <div class="button">3</div>
+                                </div>
+                                <div class="calc-button-row">
+                                    <div class="button"><</div>
+                                    <div class="button">0</div>
+                                    <div class="button">C</div>
+                                </div>
                             </div>
                             <div>
-                                <button type="submit" class="submit-btn">Submit</button>
-                                <p class="action-left">3 try left</p>
+                                <button id="submitButton" type="submit" class="submit-btn">Submit</button>
+                                <p id= "try"  class="action-left"><span id="tryCount">3</span> try left</p>
                             </div>
                     </div>
                 </div>
@@ -55,20 +57,73 @@
         </div>
     </div>
     <script>
+                //Display-Toggle confirmation message 
+
                 var nonMatch = document.getElementById("non-match")
                 nonMatch.style.display = "none";
                 var match = document.getElementById("match")
                 match.style.display = "none";
 
+
+                //Generate Pin
+
                 function generatePin() {
                     var randomNum = 999+ Math.random()*9000;
                     var generatePin = Math.floor(randomNum)
-                    document.getElementById("pin-generate").value = generatePin
+                    document.getElementById("pinGenerate").value = generatePin
                    
                 }
 
-                
+                //Numpad functionality
 
+                let calcArea = document.getElementById("numpad");
+                calcArea.addEventListener("click",function(number){
+
+                    let typedNumber = number.target.innerText;
+                    
+                    
+                        let numbers = document.getElementById("displayNumber").value + typedNumber
+                        document.getElementById("displayNumber").value = numbers
+                    
+
+
+                })
+
+                //Submit Button
+
+                let submitBtn = document.getElementById("submitButton");
+
+                submitBtn.addEventListener("click",function(){
+
+                     
+                    let pinGenerate = parseInt(document.getElementById("pinGenerate").value);
+                    let displayNumber = parseInt(document.getElementById("displayNumber").value);
+
+                    if (pinGenerate == displayNumber) {
+                       match.style.display = "block";
+                       document.getElementById("try").style.display = "none"
+                       document.getElementById("tryCount") = "3";
+                    }
+                    else{
+
+                        
+                        let tryCount = parseInt(document.getElementById("tryCount").innerText)
+                         if (tryCount == 0) {
+                            document.querySelector(".action-left").innerText =
+                                "You have used all try options";
+                                nonMatch.style.display = "block";
+                        }
+                        if (tryCount > 0 && tryCount <= 3) {
+                            document.getElementById("tryCount").innerText = tryCount - 1;
+
+                        }
+                    
+                    }
+                    
+
+                })
+
+               
 
 
     </script>
