@@ -85,7 +85,8 @@
                         let numbers = document.getElementById("displayNumber").value + typedNumber
                         document.getElementById("displayNumber").value = numbers
                     
-
+                    backSpace(typedNumber);
+                    clearBtn(typedNumber);
 
                 })
 
@@ -101,16 +102,16 @@
 
                     if (pinGenerate == displayNumber) {
                        match.style.display = "block";
+                       document.getElementById("tryCount").innerText = "3";
                        document.getElementById("try").style.display = "none"
-                       document.getElementById("tryCount") = "3";
+                       
                     }
                     else{
 
-                        
                         let tryCount = parseInt(document.getElementById("tryCount").innerText)
                          if (tryCount == 0) {
                             document.querySelector(".action-left").innerText =
-                                "You have used all try options";
+                                "Reload and Try Again";
                                 nonMatch.style.display = "block";
                         }
                         if (tryCount > 0 && tryCount <= 3) {
@@ -122,9 +123,25 @@
                     
 
                 })
+                //Backspace
+                    function backSpace(clickBtn) {
+                        if (clickBtn == "<") {
+                            let inputValues = document.getElementById("displayNumber").value;
+                            document.getElementById("displayNumber").value = inputValues.substr(
+                                0,
+                                inputValues.length - 1
+                            );
+                            
+                        }
+                    }
 
-               
-
+                    //Clear Button
+                    function clearBtn(clickBtn) {
+                        if (clickBtn == "C") {
+                            document.getElementById("displayNumber").value = "";
+                            
+                        }
+                    }
 
     </script>
 </body>
