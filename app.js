@@ -49,7 +49,7 @@ submitBtn.addEventListener("click", function () {
     }
   }
 });
-//Backspace
+//Backspace *** not working
 function backSpace(clickBtn) {
   if (clickBtn == "<") {
     let inputValues = document.getElementById("displayNumber").value;
